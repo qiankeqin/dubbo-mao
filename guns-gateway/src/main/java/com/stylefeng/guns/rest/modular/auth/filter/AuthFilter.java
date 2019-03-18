@@ -6,6 +6,7 @@ import com.stylefeng.guns.rest.common.exception.BizExceptionEnum;
 import com.stylefeng.guns.rest.config.properties.JwtProperties;
 import com.stylefeng.guns.rest.modular.auth.util.JwtTokenUtil;
 import io.jsonwebtoken.JwtException;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,20 @@ public class AuthFilter extends OncePerRequestFilter {
             chain.doFilter(request, response);
             return;
         }
+
+        //配置忽略列表
+        //如配置/user/,我们访问/user/register，那么可以直接访问
+        String ignoreUrls = jwtProperties.getIgnoreUrl();
+        if(StringUtils.isNotBlank(ignoreUrls)){
+            String[] ignoreArr = ignoreUrls.split(",");
+            for (String ignoreUrl : ignoreArr) {
+                if (request.getServletPath().equals(ignoreUrl)) {
+                    chain.doFilter(request, response);
+                    return;
+                }
+            }
+        }
+
         final String requestHeader = request.getHeader(jwtProperties.getHeader());
         String authToken = null;
         if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
