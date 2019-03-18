@@ -12,8 +12,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Service(interfaceClass = UserAPI.class)
 public class UserImpl implements UserAPI {
+
     @Override
     public boolean login(String userName, String password) {
+        System.out.println("this is user module！！！"+userName+"&"+password);
         return true;
     }
 }
