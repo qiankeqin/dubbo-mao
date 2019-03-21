@@ -1,16 +1,16 @@
 package com.stylefeng.guns.rest.modular.user;
 
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.stylefeng.guns.facade.model.UserInfoModel;
 import com.stylefeng.guns.facade.model.UserModel;
 import com.stylefeng.guns.facade.user.UserAPI;
+import com.stylefeng.guns.rest.common.CurrentUser;
 import com.stylefeng.guns.rest.modular.vo.ResponseVO;
-import jdk.nashorn.internal.ir.annotations.Reference;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 /**
  * @author qiankeqin
@@ -20,6 +20,7 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 @RestController
 public class UserController {
+
     @Reference
     private UserAPI userAPI;
 
@@ -85,5 +86,54 @@ public class UserController {
 
 
         return ResponseVO.success("用户退出成功");
+    }
+
+    /**
+     * 获取用户信息
+     * @return
+     */
+    @GetMapping("/getUserInfo")
+    public ResponseVO getUserInfo(){
+        //获取当前登录用户
+        String userId = CurrentUser.getUserId();
+        if(StringUtils.isNotBlank(userId)){
+            //将用户id传入后端查询
+            int uuid = Integer.parseInt(userId);
+            UserInfoModel userInfo = userAPI.getUserInfo(uuid);
+            if(null!=userInfo){
+                return ResponseVO.success(userInfo);
+            } else {
+                return ResponseVO.serviceFail("用户信息查询失败");
+            }
+        } else {
+            return ResponseVO.serviceFail("用户未登录");
+        }
+    }
+
+
+    /**
+     * 获取用户信息
+     * @return
+     */
+    @PostMapping("/updateuserInfo")
+    public ResponseVO updateuserInfo(UserInfoModel userInfoModel){
+        //获取当前登录用户
+        String userId = CurrentUser.getUserId();
+        if(StringUtils.isNotBlank(userId)){
+            //将用户id传入后端查询
+            int uuid = Integer.parseInt(userId);
+            //判断传入的id和登录的id是否一致，不一致可能存在串改的嫌疑
+            if(uuid != userInfoModel.getUuid()){
+                return ResponseVO.serviceFail("修改的用户非当前登录用户");
+            }
+            UserInfoModel userInfo = userAPI.updateUserInfo(userInfoModel);
+            if(null!=userInfo){
+                return ResponseVO.success(userInfo);
+            } else {
+                return ResponseVO.serviceFail("用户信息查询失败");
+            }
+        } else {
+            return ResponseVO.serviceFail("用户未登录");
+        }
     }
 }
