@@ -19,7 +19,7 @@ import java.util.Date;
  * @date 2019-03-17 20:43
  */
 @Component
-@Service(interfaceClass = UserAPI.class)
+@Service(interfaceClass = UserAPI.class,loadbalance = "roundrobin")
 public class UserServiceImpl implements UserAPI {
 
     @Autowired
