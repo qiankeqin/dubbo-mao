@@ -1,7 +1,5 @@
 package com.stylefeng.guns.rest.common;
 
-import com.stylefeng.guns.facade.model.UserInfoModel;
-
 /**
  * @author qiankeqin
  * @Description: DESCRIPTION

@@ -1,4 +1,4 @@
-package com.stylefeng.guns.facade.model;
+package com.stylefeng.guns.facade.user.vo;
 
 import java.io.Serializable;
 

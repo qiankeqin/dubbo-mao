@@ -1,7 +1,7 @@
 package com.stylefeng.guns.facade.user;
 
-import com.stylefeng.guns.facade.model.UserInfoModel;
-import com.stylefeng.guns.facade.model.UserModel;
+import com.stylefeng.guns.facade.user.vo.UserInfoModel;
+import com.stylefeng.guns.facade.user.vo.UserModel;
 
 /**
  * @author qiankeqin

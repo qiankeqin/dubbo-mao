@@ -1,8 +1,8 @@
 package com.stylefeng.guns.rest.modular.user;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.stylefeng.guns.facade.model.UserInfoModel;
-import com.stylefeng.guns.facade.model.UserModel;
+import com.stylefeng.guns.facade.user.vo.UserInfoModel;
+import com.stylefeng.guns.facade.user.vo.UserModel;
 import com.stylefeng.guns.facade.user.UserAPI;
 import com.stylefeng.guns.rest.common.CurrentUser;
 import com.stylefeng.guns.rest.modular.vo.ResponseVO;
