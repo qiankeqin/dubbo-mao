@@ -22,9 +22,19 @@ public class ResponseVO<M> {
      */
     private M data;
 
+    private String imgPre;
+
     private ResponseVO() {
     }
 
+    public static<M> ResponseVO success(String imgPre,M m){
+        ResponseVO responseVO = new ResponseVO();
+        responseVO.setStatus(0);
+        responseVO.setImgPre(imgPre);
+        responseVO.setMsg("成功");
+        responseVO.setData(m);
+        return responseVO;
+    }
     public static<M> ResponseVO success(M m){
         ResponseVO responseVO = new ResponseVO();
         responseVO.setStatus(0);
@@ -75,5 +85,13 @@ public class ResponseVO<M> {
 
     public void setData(M data) {
         this.data = data;
+    }
+
+    public String getImgPre() {
+        return imgPre;
+    }
+
+    public void setImgPre(String imgPre) {
+        this.imgPre = imgPre;
     }
 }
